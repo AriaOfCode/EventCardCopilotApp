@@ -1,0 +1,43 @@
+[
+  {
+    "Id": 1,
+    "Name": "hallo",
+    "Location": "parigi",
+    "Date": "0001-01-17T00:00:00",
+    "MaxParticipants": 10,
+    "SignedUpUserIds": [
+      "user123",
+      "user1235",
+      "user1232",
+      "user1237"
+    ],
+    "SignedUpCount": 4
+  },
+  {
+    "Id": 2,
+    "Name": "hallofff",
+    "Location": "parigifff",
+    "Date": "0001-01-18T00:00:00",
+    "MaxParticipants": 4,
+    "SignedUpUserIds": [
+      "user123",
+      "user1235",
+      "user1232",
+      "user1237"
+    ],
+    "SignedUpCount": 4
+  },
+  {
+    "Id": 3,
+    "Name": "ss",
+    "Location": "sss",
+    "Date": "0001-07-11T00:00:00",
+    "MaxParticipants": 12,
+    "SignedUpUserIds": [
+      "user1235",
+      "user1232",
+      "user1237"
+    ],
+    "SignedUpCount": 3
+  }
+]

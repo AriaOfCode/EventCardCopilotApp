@@ -1,0 +1,41 @@
+@page "/events"
+@using EventCardCopilotApp.Models
+@using EventCardCopilotApp.Services
+@using System
+
+@inject EventService EventService
+
+<h3>Event List</h3>
+
+@foreach (var ev in EventService.GetEvents())
+{
+    <div style="margin-bottom: 1em;">
+        <strong>@ev.Name</strong><br />
+        Location: @ev.Location<br />
+        Date: @ev.Date.ToShortDateString()<br />
+        Participants: @ev.SignedUpCount / @ev.MaxParticipants<br />
+        You Are: @userId <br />
+        @if (ev.SignedUpUserIds.Contains(userId))        {
+            
+            <span>✅ You are signed up</span>
+            <button @onclick="() => Unsign(ev.Id)">Cancel</button>
+        }
+        else if (ev.SignedUpCount < ev.MaxParticipants)
+        {
+            <button @onclick="() => SignUp(ev.Id)">Sign Up</button>
+        }
+        else
+        {
+            <span>❌ Event Full</span>
+        }
+    </div>
+}
+
+@code {
+   
+    private string userId = "user123" + new Random().Next(1,10); // simulazione utente
+   
+    private void SignUp(int id) => EventService.SignUp(id, userId);
+
+    private void Unsign(int id) => EventService.Unsign(id, userId);
+}

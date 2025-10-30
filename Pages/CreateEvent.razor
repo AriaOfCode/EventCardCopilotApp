@@ -1,0 +1,36 @@
+@page "/create"
+@using EventCardCopilotApp.Models
+@using EventCardCopilotApp.Services 
+@inject EventService EventService
+
+<h3>Create Event</h3>
+
+<EditForm Model="@newEvent" OnValidSubmit="HandleValidSubmit">
+    <div>
+        <label>Event Name:</label>
+        <InputText @bind-Value="newEvent.Name" />
+    </div>
+    <div>
+        <label>Location:</label>
+        <InputText @bind-Value="newEvent.Location" />
+    </div>
+    <div>
+        <label>Date:</label>
+        <InputDate @bind-Value="newEvent.Date" />
+    </div>
+    <div>
+        <label>Max Participants:</label>
+        <InputNumber @bind-Value="newEvent.MaxParticipants" />
+    </div>
+    <button type="submit">Create</button>
+</EditForm>
+
+@code {
+    private Event newEvent = new();
+
+    private void HandleValidSubmit()
+    {
+        EventService.AddEvent(newEvent);
+        newEvent = new(); // reset form
+    }
+}

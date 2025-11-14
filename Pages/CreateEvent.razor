@@ -1,36 +1,88 @@
-@page "/create"
+@page "/create-event"
+@attribute [Authorize]
+@using System.ComponentModel.DataAnnotations
+@using EventCardCopilotApp.Services
 @using EventCardCopilotApp.Models
-@using EventCardCopilotApp.Services 
-@inject EventService EventService
+@inject EventNewService eventService
 
-<h3>Create Event</h3>
+<PageTitle>Create Event</PageTitle>
 
-<EditForm Model="@newEvent" OnValidSubmit="HandleValidSubmit">
+<h1>Create Event</h1>
+
+<EditForm Model="@eventModel" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    
+
     <div>
-        <label>Event Name:</label>
-        <InputText @bind-Value="newEvent.Name" />
+        <label for="nome">Nome:</label>
+        <InputText id="nome" @bind-Value="@eventModel.EventName" />       
     </div>
+
     <div>
-        <label>Location:</label>
-        <InputText @bind-Value="newEvent.Location" />
-    </div>
+        <label for="dataInizio">Data Inizio:</label>
+        <InputDate id="dataInizio" @bind-Value="@eventModel.EventStart" />
+    </div>    
     <div>
-        <label>Date:</label>
-        <InputDate @bind-Value="newEvent.Date" />
-    </div>
+        <label for="luogo">Luogo:</label>
+        <InputText id="luogo" @bind-Value="@eventModel.Location" />
+    </div>  
     <div>
-        <label>Max Participants:</label>
-        <InputNumber @bind-Value="newEvent.MaxParticipants" />
+        <label for="prezzo">Prezzo:</label>
+        <InputNumber id="prezzo" @bind-Value="@eventModel.Price" />
+    </div>    
+    
+    <div>
+        <label for="descrizione">Descrizione:</label>
+        <InputTextArea id="descrizione" @bind-Value="@eventModel.Description" />        
     </div>
-    <button type="submit">Create</button>
+     <br>
+    <div style="height: 100px;">
+        @if(String.IsNullOrEmpty(eventModel.Download_url)){
+            <br>
+            <ImageGallery  OnImageChange="UpdateImage" ></ImageGallery>
+        }else{            
+            <div class="container-image">
+                <img src="@eventModel.Download_url"  @onclick="HandleIconImageClick"  alt="Cover-Event" style="width:100%">            
+            </div>                      
+        }
+
+       
+        
+        
+   </div> 
+    <br>
+    <button type="submit" class="btn btn-primary">Crea Evento</button>
+    <br><br>
+    
+
+    <ValidationSummary />
 </EditForm>
 
 @code {
-    private Event newEvent = new();
-
-    private void HandleValidSubmit()
+    private void HandleIconImageClick()
     {
-        EventService.AddEvent(newEvent);
-        newEvent = new(); // reset form
+        eventModel.Download_url = "";
+    }
+
+    private Event eventModel = new Event();
+
+    protected override void OnInitialized()
+    {
+        // Imposta EventStart alla data di oggi
+        eventModel.EventStart = DateTime.Today;
+    }
+ 
+     public async Task  HandleValidSubmit()
+    { 
+        await eventService.AddEventAsync(eventModel);
+        Console.WriteLine($"Evento creato: {eventModel.EventName}, {eventModel.Description}");
+        eventModel= new Event();
+        eventModel.EventStart = DateTime.Today;
+    }
+
+    
+    private void UpdateImage(string image)
+    {
+        eventModel.Download_url = image;
     }
 }

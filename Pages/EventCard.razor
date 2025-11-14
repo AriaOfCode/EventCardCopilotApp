@@ -1,0 +1,106 @@
+@page "/event-card"
+@using EventCardCopilotApp.Services
+@using EventCardCopilotApp.Models
+@inject EventNewService EventService
+@inject UserService UserService
+
+
+<style>
+    .card {
+        max-width: 300px;
+        max-height: 500px;
+    }
+
+    .card:hover {
+        box-shadow: 0 0px 0px 0 rgb(0 0 0 / 69%);
+    }
+</style>
+<div class="card card2">
+    <img src="@EventItem.Download_url" alt="@EventItem.EventName image" class="photo-image" />
+    <h4 class="detail-event">@EventItem.EventName - @EventItem.Location - @EventItem.EventStart</h4>
+    <p class="price">$@EventItem.Price</p>
+    <p style="min-height: 99px;">@EventItem.Description</p>
+    <p style="display: flex;">
+        @if(isSignUp){
+            <button style="width: 80%;" @onclick="UpdateUser">Unsubscribe</button>
+        }else{
+            <button style="width: 80%;" @onclick="UpdateUser">Sign up</button>
+        }
+        
+        <!-- SignUp  OnUserChange="UpdateUser" CurrentEventId="@EventItem.Id"></SignUp-->
+        <span class="@RibbonClass">@RibbonText</span>
+        <SubtractionComponent Number1="@EventItem.MaxMembership" Number2="@EventItem.Membership" Users="Users" />
+    </p>
+</div>
+
+<Modal IsVisible="@isModalVisible" IsVisibleChanged="@((value) => isModalVisible = value)">
+    @if (!string.IsNullOrEmpty(message))
+    {
+        <div style="z-index: 1000;" class="alert @alertClass">@message</div>
+    }
+</Modal>
+
+    @code {
+    [Parameter] public Event EventItem { get; set; } = new();
+    [Parameter] public EventCallback<int> OnSignUp { get; set; }
+
+    private List<User> Users{ get; set; } = new();
+
+    private bool isModalVisible = false;
+    private string message = "";
+    private string alertClass = "";
+
+    private string RibbonClass => EventItem.Membership >= EventItem.MaxMembership ? "ribbon-red" : "ribbon";
+    private string RibbonText => EventItem.Membership >= EventItem.MaxMembership ? "FULL" : "NEW";
+
+
+    int userId;
+    private void UpdateUser()
+    {
+        
+        if(userId!=0 && !isSignUp){
+            var esito = EventService.SignUpToEvent(EventItem.Id, userId);
+            if (esito)
+            {
+                message = "SignUp!";
+                alertClass = "alert-success"; 
+            }
+            else
+            {
+                message = "no place.";
+                alertClass = "alert-danger"; 
+            }
+
+        }else if(userId!=0 && isSignUp){
+             bool esito = EventService.Unsign(EventItem.Id, userId);
+            if (esito)
+            {
+                message = "Unsign!";
+                alertClass = "alert-success"; 
+            }
+            else
+            {
+                message = "not found.";
+                alertClass = "alert-danger"; 
+            }
+
+
+        }else
+        {
+            message = "account not found.";
+            alertClass = "alert-danger"; 
+        }
+
+        isModalVisible = true;
+
+    }
+    bool isSignUp = false;
+    protected override Task OnInitializedAsync()
+    {
+        userId = UserService.GetIdUser();
+        isSignUp = EventService.IsSignUpToEvent(userId, EventItem.Id);
+        Users = UserService.GetUsersMember(EventItem.Id);
+
+        return base.OnInitializedAsync();
+    }
+}

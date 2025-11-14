@@ -1,0 +1,49 @@
+@page "/photos"
+@using EventCardCopilotApp.Services
+@using EventCardCopilotApp.Models
+@inject PhotoService PhotoService
+
+<h3>List Photo</h3>
+
+<style>
+    .card {
+            max-width: 300px;
+            max-height: 500px;
+    }
+    
+ .card :hover {
+    box-shadow: 0 0px 0px 0 rgb(0 0 0 / 69%);
+}
+ 
+</style>
+
+@if (photos == null)
+{
+    <p><em>Caricamento...</em></p>
+}
+else
+{
+    <div class="row">
+        @foreach (var photo in photos)
+        {
+             
+                <div class="card">
+                    <img src="@photo.Download_url" alt="Denim Jeans" class="photo-image"/>
+                    <h4>Author: @photo.Author</h4>
+                    <p class="price">$@photo.Id.99</p>
+                    <p>Lorem jeamsun denim lorem jeansum. Lorem jeamsun denim lorem jeansum lorem ipsum lorem jeansum. Lorem jeamsun denim lorem jeansum.</p>
+                    <p><button>Sign up</button></p>
+                </div>            
+            
+        }
+     </div>
+}
+
+@code {
+    private List<Photo> photos = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        photos = await PhotoService.GetPhotosAsync();
+    }
+}

@@ -1,0 +1,82 @@
+ 
+@using EventCardCopilotApp.Services
+@using EventCardCopilotApp.Models
+@inject UserService UserService
+ 
+ 
+<button style="width: 80%;" @onclick="ShowModal">Sign up</button> 
+
+<Modal IsVisible="@isModalVisible" IsVisibleChanged="@((value) => isModalVisible = value)">
+        
+            <div class="user-list" id="userList">
+Who are you?: 
+                @foreach (User user in users)
+                {
+                   <button class="chip" @onclick="() => HandleUserClick(user.Id)">
+                        <img src="@user.ImageUrl" alt="Person"    width="96" height="96">
+                        @user.Fullname
+                     </button>
+                }
+                
+            </div>
+             
+       
+    
+</Modal>
+
+@code {
+    private List<User> users= new List<User>();
+
+    [Parameter]
+    public EventCallback<int> OnUserChange { get; set; }
+
+    
+
+    protected override async Task OnInitializedAsync()
+    {
+        users = UserService.GetAllUsers(CurrentEventId);
+        await Task.Delay(1000);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+            users = UserService.GetAllUsers(CurrentEventId);
+            await Task.Delay(1000); 
+        
+    }
+
+    private int selectedUser ;
+    const int itemsPerPage = 6;
+ 
+
+    [Parameter]
+    public int CurrentEventId {get; set;}
+    
+
+    private bool isModalVisible = false;
+
+    private async Task  ShowModal()
+    {
+            isModalVisible= true;
+            users = UserService.GetAllUsers(CurrentEventId);
+            await Task.Delay(1000); 
+
+    }
+
+    private async Task  CloseModal()
+    {       
+            isModalVisible= false;
+            users = UserService.GetAllUsers(CurrentEventId);
+            await Task.Delay(1000); 
+    }
+    
+        private async Task HandleUserClick(int user)
+        {
+            
+            selectedUser = user;            
+            await CloseModal();
+            await OnUserChange.InvokeAsync(selectedUser); 
+        }
+
+        
+}

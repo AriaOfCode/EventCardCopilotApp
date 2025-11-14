@@ -1,31 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "D:\\repo\\work_home\\EventEaseCopilot\\EventCardCopilotApp\\EventCardCopilotApp.csproj": {}
+    "D:\\repo\\AriaOfCode\\EventCardCopilotApp\\EventCardCopilotApp\\EventCardCopilotApp.csproj": {}
   },
   "projects": {
-    "D:\\repo\\work_home\\EventEaseCopilot\\EventCardCopilotApp\\EventCardCopilotApp.csproj": {
+    "D:\\repo\\AriaOfCode\\EventCardCopilotApp\\EventCardCopilotApp\\EventCardCopilotApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\repo\\work_home\\EventEaseCopilot\\EventCardCopilotApp\\EventCardCopilotApp.csproj",
+        "projectUniqueName": "D:\\repo\\AriaOfCode\\EventCardCopilotApp\\EventCardCopilotApp\\EventCardCopilotApp.csproj",
         "projectName": "EventCardCopilotApp",
-        "projectPath": "D:\\repo\\work_home\\EventEaseCopilot\\EventCardCopilotApp\\EventCardCopilotApp.csproj",
-        "packagesPath": "C:\\Users\\salvo\\.nuget\\packages\\",
-        "outputPath": "D:\\repo\\work_home\\EventEaseCopilot\\EventCardCopilotApp\\obj\\",
+        "projectPath": "D:\\repo\\AriaOfCode\\EventCardCopilotApp\\EventCardCopilotApp\\EventCardCopilotApp.csproj",
+        "packagesPath": "C:\\Users\\AriaPrince\\.nuget\\packages\\",
+        "outputPath": "D:\\repo\\AriaOfCode\\EventCardCopilotApp\\EventCardCopilotApp\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\salvo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\AriaPrince\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -43,8 +37,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.300"
+        }
       },
       "frameworks": {
         "net8.0": {
@@ -68,7 +61,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.413/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

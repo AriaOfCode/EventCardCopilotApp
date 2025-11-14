@@ -1,0 +1,103 @@
+@using EventCardCopilotApp.Services
+@using EventCardCopilotApp.Models
+@inject PhotoService PhotoService
+
+<button type="button" class="btn btn-primary" @onclick="ShowModal">+ Add Image</button>
+
+
+<Modal IsVisible="@isModalVisible" IsVisibleChanged="@((value) => isModalVisible = value)">
+        Choice your image:
+            <div class="image-list" id="imageList">
+
+                @foreach (var photo in photos)
+                {
+                    var imageUrl = photo.Download_url.Replace("5000","100").Replace("3333","100");
+                    var listArray = imageUrl.Split('/');
+                    string change = listArray[listArray.Length-2] + "/" + listArray[listArray.Length-1];                    
+                    imageUrl =imageUrl.Replace(change, "100/100"); 
+                    <div class="card">
+                        <img src="@imageUrl" alt="Denim Jeans" @onclick="() => HandleImageClick(imageUrl)" />  
+                    </div>
+                }
+                
+            </div>
+            <div class="navigation">
+                <button type="button" id="prevBtn" class="btn btn-primary" @onclick="@Backward">&#8249;</button>
+                <button type="button" id="nextBtn" class="btn btn-primary" @onclick="@Forward">&#8250;</button>
+            </div>
+       
+    
+</Modal>
+
+@code {
+    private List<Photo> photos= new List<Photo>();
+
+    [Parameter]
+    public EventCallback<string> OnImageChange { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        photos = await PhotoService.GetPhotosAsync(currentPage, itemsPerPage);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+            photos = await PhotoService.GetPhotosAsync(currentPage, itemsPerPage);
+            Console.WriteLine($"Il OnParametersSetAsync è cambiato: {currentPage}");
+        
+    }
+
+    private string selectedImage = "";
+    const int itemsPerPage = 6;
+    [Parameter]
+    public int currentPage {get; set;} = 1;
+    private bool isModalVisible = false;
+
+    private async Task  ShowModal()
+    {
+        currentPage = 1;
+        isModalVisible = true;
+        photos = await PhotoService.GetPhotosAsync(currentPage, itemsPerPage);
+
+    }
+
+    private async Task  CloseModal()
+    {
+        currentPage = 1;
+        isModalVisible = false;
+        photos = await PhotoService.GetPhotosAsync(currentPage, itemsPerPage);
+    }
+    private async Task  Forward()
+        {
+        if(currentPage < 10){
+            currentPage++;
+            
+        }else{
+            currentPage = 1;
+        }
+            photos = await PhotoService.GetPhotosAsync(currentPage, itemsPerPage);
+            Console.WriteLine($"Forward: Current Page: {currentPage}");
+            
+        }
+
+       private async Task  Backward()
+        {
+           if(currentPage > 0){
+            currentPage--;            
+           }else{
+            currentPage = 10;
+           }
+           photos = await PhotoService.GetPhotosAsync(currentPage, itemsPerPage);
+           Console.WriteLine($"Backward: Current Page: {currentPage}");
+        }
+
+        private async Task HandleImageClick(string imageUrl)
+        {
+            this.currentPage = 0;
+            selectedImage = imageUrl;            
+            await CloseModal();
+            await OnImageChange.InvokeAsync(selectedImage);
+            Console.WriteLine($"Selected Image URL: {selectedImage}");
+        }
+}

@@ -1,0 +1,57 @@
+@page "/login"
+@using Microsoft.AspNetCore.Mvc.ViewFeatures
+@inject NavigationManager Navigation
+@inject IHttpContextAccessor HttpContextAccessor
+@inject ITempDataDictionaryFactory TempDataFactory
+@inject AuthenticationStateProvider AuthenticationStateProvider
+<h3>Login</h3>
+
+@if (isAuthenticated)
+{
+    <p>Benvenuto, @username!</p>
+    <form method="post" action="/auth/logout">
+        <button type="submit">Logout</button>
+    </form>
+}
+else
+{
+    @if (!string.IsNullOrEmpty(loginError))
+    {
+        <p style="color:red">@loginError</p>
+    }
+
+    <form method="post" action="/auth/login">
+        <input name="username" placeholder="Username" />
+        <button type="submit">Accedi</button>
+    </form>
+
+    <p>usa: "jdoe", "asmith", "bwilliams", "cjones", "dlee"</p>
+}
+
+@code {
+    private bool isAuthenticated = false;
+    private string username = "";
+    private string loginError = "";
+
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthStateTask { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState =  await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity?.IsAuthenticated == true)
+        {
+            isAuthenticated = true;
+            username = user.Identity.Name;
+        }
+
+        // ✅ Leggi TempData correttamente
+        var tempData = TempDataFactory.GetTempData(HttpContextAccessor.HttpContext);
+        if (tempData.ContainsKey("LoginError"))
+        {
+            loginError = tempData["LoginError"]?.ToString() ?? "";
+        }
+    }
+}

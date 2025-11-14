@@ -1,41 +1,42 @@
-@page "/events"
+@page "/event-list"
+@attribute [Authorize]
 @using EventCardCopilotApp.Models
 @using EventCardCopilotApp.Services
-@using System
+@inject EventNewService EventService
 
-@inject EventService EventService
+<h3>List Event</h3>
 
-<h3>Event List</h3>
-
-@foreach (var ev in EventService.GetEvents())
+@if (events == null)
 {
-    <div style="margin-bottom: 1em;">
-        <strong>@ev.Name</strong><br />
-        Location: @ev.Location<br />
-        Date: @ev.Date.ToShortDateString()<br />
-        Participants: @ev.SignedUpCount / @ev.MaxParticipants<br />
-        You Are: @userId <br />
-        @if (ev.SignedUpUserIds.Contains(userId))        {
-            
-            <span>✅ You are signed up</span>
-            <button @onclick="() => Unsign(ev.Id)">Cancel</button>
-        }
-        else if (ev.SignedUpCount < ev.MaxParticipants)
+    <p><em>Caricamento...</em></p>
+}
+else
+{
+    <div class="row">
+        @foreach (var eventItem in events)
         {
-            <button @onclick="() => SignUp(ev.Id)">Sign Up</button>
-        }
-        else
-        {
-            <span>❌ Event Full</span>
+            <EventCard EventItem="@eventItem"  />
         }
     </div>
 }
 
-@code {
-   
-    private string userId = "user123" + new Random().Next(1,10); // simulazione utente
-   
-    private void SignUp(int id) => EventService.SignUp(id, userId);
+<Modal IsVisible="@isModalVisible" IsVisibleChanged="@((value) => isModalVisible = value)">
+    @if (!string.IsNullOrEmpty(message))
+    {
+        <div style="z-index: 1000;" class="alert @alertClass">@message</div>
+    }
+</Modal>
 
-    private void Unsign(int id) => EventService.Unsign(id, userId);
+@code {
+    private bool isModalVisible = false;
+    private string message = "";
+    private string alertClass = "";
+
+    List<Event> events = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        events = await EventService.GetEventsAsync();
+    }
+ 
 }

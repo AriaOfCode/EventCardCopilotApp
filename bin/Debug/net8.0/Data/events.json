@@ -1,24 +1,99 @@
 [
   {
     "Id": 1,
-    "Name": "hallo",
-    "Location": "parigi",
-    "Date": "0001-01-17T00:00:00",
-    "MaxParticipants": 10,
+    "EventStart": "2025-12-02T12:41:12.2910447+01:00",
+    "BookingWindowEnd": "2025-11-22T12:41:12.2910575+01:00",
+    "EventName": "Music Concert",
+    "Description": "X. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "Location": "New York",
+    "Download_url": "https://picsum.photos/id/11/2500/1667",
+    "Price": 50,
     "SignedUpUserIds": [
-      "user123"
+      1
     ],
-    "SignedUpCount": 1
+    "MaxMembership": 100,
+    "Membership": 1
   },
   {
     "Id": 2,
-    "Name": "hallofff",
-    "Location": "parigifff",
-    "Date": "0001-01-18T00:00:00",
-    "MaxParticipants": 4,
+    "EventStart": "2026-01-02T12:41:12.2910993+01:00",
+    "BookingWindowEnd": "2025-12-02T12:41:12.2911001+01:00",
+    "EventName": "Art Exhibition",
+    "Description": "X. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "Location": "Paris",
+    "Download_url": "https://picsum.photos/id/11/2500/1667",
+    "Price": 30,
     "SignedUpUserIds": [
-      "user123"
+      1,
+      2,
+      3,
+      4
     ],
-    "SignedUpCount": 1
+    "MaxMembership": 80,
+    "Membership": 4
+  },
+  {
+    "Id": 3,
+    "EventStart": "2026-02-02T12:41:12.2911022+01:00",
+    "BookingWindowEnd": "2025-12-12T12:41:12.2911024+01:00",
+    "EventName": "Tech Conference",
+    "Description": "X. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "Location": "San Francisco",
+    "Download_url": "https://picsum.photos/id/1013/4256/2832",
+    "Price": 100,
+    "SignedUpUserIds": [
+      1,
+      2,
+      4,
+      3
+    ],
+    "MaxMembership": 200,
+    "Membership": 4
+  },
+  {
+    "Id": 4,
+    "EventStart": "2025-12-02T12:41:12.291103+01:00",
+    "BookingWindowEnd": "2025-11-27T12:41:12.2911032+01:00",
+    "EventName": "Food Festival",
+    "Description": "X. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "Location": "Tokyo",
+    "Download_url": "https://picsum.photos/id/11/2500/1667",
+    "Price": 20,
+    "SignedUpUserIds": [
+      3
+    ],
+    "MaxMembership": 150,
+    "Membership": 1
+  },
+  {
+    "Id": 5,
+    "EventStart": "2026-03-02T12:41:12.2911034+01:00",
+    "BookingWindowEnd": "2025-12-22T12:41:12.2911036+01:00",
+    "EventName": "Marathon",
+    "Description": "X. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "Location": "London",
+    "Download_url": "https://picsum.photos/id/1016/3844/2563",
+    "Price": 40,
+    "SignedUpUserIds": [
+      3,
+      1
+    ],
+    "MaxMembership": 300,
+    "Membership": 2
+  },
+  {
+    "Id": 6,
+    "EventStart": "2025-11-10T00:00:00",
+    "BookingWindowEnd": "0001-01-01T00:00:00",
+    "EventName": "Capodanno",
+    "Description": "Serata con amici ",
+    "Location": "parigi",
+    "Download_url": "https://picsum.photos/id/42/100/100",
+    "Price": 700,
+    "SignedUpUserIds": [
+      1
+    ],
+    "MaxMembership": 3,
+    "Membership": 1
   }
 ]

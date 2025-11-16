@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EventCardCopilotApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bc8a35565479bc19ae116d1e4848949c4b9b490d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0f651d2324b3e2cc5f13a0a3a35829c0178c7963")]
 [assembly: System.Reflection.AssemblyProductAttribute("EventCardCopilotApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EventCardCopilotApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
